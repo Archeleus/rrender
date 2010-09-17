@@ -32,6 +32,10 @@
 #include "parallel.h"
 #include "progressreporter.h"
 #include "renderer.h"
+#include <ImageMagick/Magick++.h>
+
+Magick::Image image("200x100", "white");
+
 
 // Scene Method Definitions
 Scene::~Scene() {

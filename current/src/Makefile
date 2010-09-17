@@ -28,6 +28,11 @@ OPT=-O2
 # comment out this line to enable assertions at runtime
 DEFS += -DNDEBUG
 
+#################################
+# ImageMagick stuff
+MAGICKINCLUDES=-I/usr/local/include/ImageMagick
+MAGICKLIBDIR=-L/usr/local/lib -L/opt/local/lib
+##################################
 #########################################################################
 # nothing below this line should need to be changed (usually)
 #########################################################################
@@ -45,25 +50,30 @@ else
 endif
 
 EXRLIBS=$(EXR_LIBDIR) -Bstatic -lIex -lIlmImf -lIlmThread -lImath -lIex -lHalf -Bdynamic
+##MAGICK
+MAGICKLIBS=$(MAGICKLIBDIR) -lMagick++ -lMagickWand -lMagickCore -llcms -ltiff -lfreetype -ljasper -ljpeg -lpng -lwmf -lwmflite -lXext -lXt -lSM -lICE -lX11 -lbz2 -pthread -lIlmImf -lz -lImath -lHalf -lIex -lIlmThread -lxml2 -lz -lm -lgomp -lpthread -lltdl
+##/MAGICK
 ifeq ($(ARCH),Linux)
   EXRLIBS += -lpthread
+  MAGICKLIBS += -lpthread
 endif
 ifeq ($(ARCH),OpenBSD)
   EXRLIBS += -lpthread
 endif
 ifeq ($(ARCH),Darwin)
   EXRLIBS += -lz
+  MAGICKLIBS += -lz
 endif
 
 CC=gcc
 CXX=g++
 LD=$(CXX) $(OPT) $(MARCH)
-INCLUDE=-I. -Icore $(EXR_INCLUDES) $(TIFF_INCLUDES)
+INCLUDE=-I. -Icore $(EXR_INCLUDES) $(TIFF_INCLUDES) $(MAGICKINCLUDES)
 WARN=-Wall
 CWD=$(shell pwd)
 CXXFLAGS=$(OPT) $(MARCH) $(INCLUDE) $(WARN) $(DEFS)
 CCFLAGS=$(CXXFLAGS)
-LIBS=$(LEXLIB) $(EXR_LIBDIR) $(EXRLIBS) -lm 
+LIBS=$(LEXLIB) $(EXR_LIBDIR) $(EXRLIBS) $(MAGICKLIBS) -lm 
 
 LIBSRCS=$(wildcard core/*.cpp) core/pbrtlex.cpp core/pbrtparse.cpp
 LIBSRCS += $(wildcard accelerators/*.cpp cameras/*.cpp film/*.cpp filters/*.cpp )
