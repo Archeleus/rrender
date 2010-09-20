@@ -29,8 +29,12 @@
 #include "montecarlo.h"
 #include "paramset.h"
 #include "sh.h"
+#include "backgroundreading.h"
 
+ImageRead im;
+///test
 // Light Method Definitions
+
 Light::~Light() {
 }
 
@@ -48,9 +52,40 @@ Spectrum VisibilityTester::Transmittance(const Scene *scene,
 }
 
 
-Spectrum Light::Le(const RayDifferential &) const {
-    return Spectrum(0.);
+Spectrum Light::Le(const RayDifferential & ray, Sample *sample) const {
+    //testing
+	/*printf("here");
+	Magick::Image background;
+	background.read("background-picture.jpg");
+	Magick::Pixels view(background);
+	float i, j;
+	i = 400; j = 400;*/
+
+/*	Magick::ColorRGB t;
+	t = background.pixelColor(0, 0);*/
+	//TODO: Functions in ImageMagick cannot be called too many times
+	//cause it uses a lot of time, especially read()
+	Spectrum colour;
+	float rgbv[3];
+	rgbv[0] = 0.3;
+	rgbv[1] = 0.4;
+	rgbv[2] = 0.7;
+
+	if((int)sample->imageX <= 800 && (int) sample->imageY <= 600){
+	im.get_rgbv((int)sample->imageX, (int)sample->imageY);
+	rgbv[0] = im.colours[0];
+	rgbv[1] = im.colours[1];
+	rgbv[2] = im.colours[2];
+	}
+	//printf("%d %d\n", (int)sample->imageX, (int)sample->imageY);
+
+
+	return colour.FromRGB(rgbv, SPECTRUM_REFLECTANCE);
+
 }
+Spectrum Light::Le(const RayDifferential & ray) const {
+	return Spectrum(0.);
+		}
 
 
 LightSampleOffsets::LightSampleOffsets(int count, Sample *sample) {

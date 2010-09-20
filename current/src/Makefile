@@ -51,7 +51,7 @@ endif
 
 EXRLIBS=$(EXR_LIBDIR) -Bstatic -lIex -lIlmImf -lIlmThread -lImath -lIex -lHalf -Bdynamic
 ##MAGICK
-MAGICKLIBS=$(MAGICKLIBDIR) -lMagick++ -lMagickWand -lMagickCore -llcms -ltiff -lfreetype -ljasper -ljpeg -lpng -lwmf -lwmflite -lXext -lXt -lSM -lICE -lX11 -lbz2 -pthread -lIlmImf -lz -lImath -lHalf -lIex -lIlmThread -lxml2 -lz -lm -lgomp -lpthread -lltdl
+MAGICKLIBS=$(MAGICKLIBDIR) -g -O2 -lMagick++ -lMagickWand -lMagickCore -llcms -ltiff -lfreetype -ljasper -ljpeg -lpng -lwmf -lwmflite -lXext -lXt -lSM -lICE -lX11 -lbz2 -pthread -lIlmImf -lz -lImath -lHalf -lIex -lIlmThread -lxml2 -lz -lm -lgomp -lpthread -lltdl
 ##/MAGICK
 ifeq ($(ARCH),Linux)
   EXRLIBS += -lpthread
@@ -64,7 +64,7 @@ ifeq ($(ARCH),Darwin)
   EXRLIBS += -lz
   MAGICKLIBS += -lz
 endif
-
+TESTING = -I/usr/local/include/ImageMagick -g -O2 -pthread -L/usr/local/lib -L/usr/local/lib -lMagick++ -lMagickWand -lMagickCore -llcms -ltiff -lfreetype -ljasper -ljpeg -lpng -lwmf -lwmflite -lXext -lXt -lSM -lICE -lX11 -lbz2 -pthread -lIlmImf -lz -lImath -lHalf -lIex -lIlmThread -lxml2 -lz -lm -lgomp -lpthread -lltdl
 CC=gcc
 CXX=g++
 LD=$(CXX) $(OPT) $(MARCH)
@@ -74,6 +74,7 @@ CWD=$(shell pwd)
 CXXFLAGS=$(OPT) $(MARCH) $(INCLUDE) $(WARN) $(DEFS)
 CCFLAGS=$(CXXFLAGS)
 LIBS=$(LEXLIB) $(EXR_LIBDIR) $(EXRLIBS) $(MAGICKLIBS) -lm 
+
 
 LIBSRCS=$(wildcard core/*.cpp) core/pbrtlex.cpp core/pbrtparse.cpp
 LIBSRCS += $(wildcard accelerators/*.cpp cameras/*.cpp film/*.cpp filters/*.cpp )

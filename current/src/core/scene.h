@@ -33,6 +33,14 @@
 #include "primitive.h"
 #include "integrator.h"
 
+
+/*
+ * imagemagick
+ *
+ */
+
+
+
 // Scene Declarations
 class Scene {
 public:
@@ -59,6 +67,7 @@ public:
     VolumeRegion *volumeRegion;
     BBox bound;
 };
+
 
 
 

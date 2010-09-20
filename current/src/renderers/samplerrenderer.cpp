@@ -34,6 +34,7 @@
 #include "camera.h"
 #include "intersection.h"
 
+
 static uint32_t hash(char *key, uint32_t len)
 {
     uint32_t   hash, i;
@@ -230,7 +231,7 @@ Spectrum SamplerRenderer::Li(const Scene *scene,
     else {
         // Handle ray that doesn't intersect any geometry
         for (uint32_t i = 0; i < scene->lights.size(); ++i)
-           Li += scene->lights[i]->Le(ray);
+           Li += scene->lights[i]->Le(ray, const_cast<Sample*> (sample));
     }
     Spectrum Lvi = volumeIntegrator->Li(scene, this, ray, sample, rng,
                                         T, arena);

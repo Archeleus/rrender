@@ -35,6 +35,7 @@
 #include "spectrum.h"
 #include "rng.h"
 #include "memory.h"
+#include <ImageMagick/Magick++.h>
 
 // Light Declarations
 class Light {
@@ -51,6 +52,7 @@ public:
                     "that this transform will have no scale factors in it.\n"
                     "Proceed at your own risk; your image may have errors or\n"
                     "the system may crash as a result of this.");
+
     }
     virtual Spectrum Sample_L(const Point &p, float pEpsilon,
         const LightSample &ls, float time, Vector *wi, float *pdf,
@@ -58,6 +60,8 @@ public:
     virtual Spectrum Power(const Scene *) const = 0;
     virtual bool IsDeltaLight() const = 0;
     virtual Spectrum Le(const RayDifferential &r) const;
+    //test
+    virtual Spectrum Le(const RayDifferential &r, Sample *sample) const;
     virtual float Pdf(const Point &p, const Vector &wi) const = 0;
     virtual Spectrum Sample_L(const Scene *scene, const LightSample &ls,
                               float u1, float u2, float time, Ray *ray,
@@ -148,6 +152,34 @@ private:
     vector<float> areas;
     Distribution1D *areaDistribution;
 };
+
+/*class ImageRead{
+public:
+	ImageRead();
+	float* get_rgbv(int, int);
+public:
+	Magick::Image backgroundd;
+	//Magick::Pixels view(Magick::Image);
+	Magick::ColorRGB t;
+};
+
+ImageRead::ImageRead(){
+	backgroundd.read("background-picture.jpg");
+	//view(backgroundd);
+
+}
+
+float* ImageRead::get_rgbv(int x, int y){
+	Magick::Pixels view(backgroundd);
+	float colours[3];
+	t = backgroundd.pixelColor(x, y);
+	colours[0] = t.red();
+	colours[1] = t.green();
+	colours[2] = t.blue();
+	return colours;
+}*/
+
+
 
 
 

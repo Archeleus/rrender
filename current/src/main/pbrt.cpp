@@ -61,9 +61,9 @@ int main(int argc, char *argv[]) {
     if (!options.quiet) {
         printf("pbrt version %s of %s at %s [Detected %d core(s)]\n",
                PBRT_VERSION, __DATE__, __TIME__, NumSystemCores());
-        printf("Copyright (c)1998-2010 Matt Pharr and Greg Humphreys.\n");
-        printf("The source code to pbrt (but *not* the book contents) is covered by the GNU GPL.\n");
-        printf("See the file COPYING.txt for the conditions of the license.\n");
+        //printf("Copyright (c)1998-2010 Matt Pharr and Greg Humphreys.\n");
+        //printf("The source code to pbrt (but *not* the book contents) is covered by the GNU GPL.\n");
+        //printf("See the file COPYING.txt for the conditions of the license.\n");
         fflush(stdout);
     }
     pbrtInit(options);
